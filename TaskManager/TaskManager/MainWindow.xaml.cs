@@ -31,12 +31,19 @@ namespace TaskManager
 
         private void KillBtnClick(object sender, RoutedEventArgs e)
         {
+            
+        }
+
+        private void ProcessesDGSelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
             try
             {
+                var result = MessageBox.Show("Вы точно хотите удалить?","Уведомление", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.No) return;
                 using (var selectedProcess = processesDG.SelectedItem as Process)
                 {
                     var processes = Process.GetProcessesByName(selectedProcess.ProcessName);
-                    foreach(var process in processes)
+                    foreach (var process in processes)
                     {
                         process.Kill();
                     }
@@ -47,6 +54,7 @@ namespace TaskManager
             {
                 MessageBox.Show("Отказано в доступе");
             }
+            return;
         }
     }
 }
