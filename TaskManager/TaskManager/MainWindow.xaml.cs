@@ -39,7 +39,7 @@ namespace TaskManager
             try
             {
                 var result = MessageBox.Show("Вы точно хотите удалить?","Уведомление", MessageBoxButton.YesNo);
-                if (result == MessageBoxResult.No) return;
+                if (result == MessageBoxResult.No || result == MessageBoxResult.Cancel) return;
                 using (var selectedProcess = processesDG.SelectedItem as Process)
                 {
                     var processes = Process.GetProcessesByName(selectedProcess.ProcessName);
