@@ -28,14 +28,14 @@ namespace TaskManager
             InitializeComponent();
             var currentProcesses = Process.GetProcesses().ToList();
             processesDG.ItemsSource = currentProcesses;
-            
+
         }
 
         private void ProcessesDGSelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
             try
             {
-                var result = MessageBox.Show("Вы точно хотите удалить?","Уведомление", MessageBoxButton.YesNo);
+                var result = MessageBox.Show("Вы точно хотите удалить?", "Уведомление", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.No || result == MessageBoxResult.Cancel) return;
                 using (var selectedProcess = processesDG.SelectedItem as Process)
                 {
@@ -104,7 +104,7 @@ namespace TaskManager
                         myProcess.StartInfo.FileName = FilePath;
                         myProcess.StartInfo.CreateNoWindow = true;
                         myProcess.Start();
-                        if(myProcess.PriorityClass == ProcessPriorityClass.RealTime)
+                        if (myProcess.PriorityClass == ProcessPriorityClass.RealTime)
                         {
                             myProcess.PriorityClass = ProcessPriorityClass.Normal;
                         }
