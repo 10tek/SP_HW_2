@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -21,16 +22,12 @@ namespace TaskManager
     /// </summary>
     public partial class MainWindow : Window
     {
+        public string FilePath { get; set; }
         public MainWindow()
         {
             InitializeComponent();
-
             var currentProcesses = Process.GetProcesses().ToList();
             processesDG.ItemsSource = currentProcesses;
-        }
-
-        private void KillBtnClick(object sender, RoutedEventArgs e)
-        {
             
         }
 
@@ -55,6 +52,44 @@ namespace TaskManager
                 MessageBox.Show("Отказано в доступе");
             }
             return;
+        }
+
+        public bool OpenFileDialog()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                FilePath = openFileDialog.FileName;
+                return true;
+            }
+            return false;
+        }
+
+        private void openProcessBtnClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (OpenFileDialog())
+                {
+                    using (Process myProcess = new Process())
+                    {
+                        myProcess.StartInfo.UseShellExecute = false;
+                        myProcess.StartInfo.FileName = FilePath;
+                        myProcess.StartInfo.CreateNoWindow = true;
+                        myProcess.Start();
+                        myProcess.PriorityClass = ProcessPriorityClass.High;
+                        MessageBox.Show($"new priority class: {myProcess.PriorityClass}");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Файл не выбран");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
