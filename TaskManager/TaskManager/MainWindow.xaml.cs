@@ -65,7 +65,7 @@ namespace TaskManager
             return false;
         }
 
-        private void openProcessBtnClick(object sender, RoutedEventArgs e)
+        private void OpenProcessHighPriorityBtnClick(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -78,6 +78,36 @@ namespace TaskManager
                         myProcess.StartInfo.CreateNoWindow = true;
                         myProcess.Start();
                         myProcess.PriorityClass = ProcessPriorityClass.High;
+                        MessageBox.Show($"new priority class: {myProcess.PriorityClass}");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Файл не выбран");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void OpenProcessNormalPriorityBtnClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (OpenFileDialog())
+                {
+                    using (Process myProcess = new Process())
+                    {
+                        myProcess.StartInfo.UseShellExecute = false;
+                        myProcess.StartInfo.FileName = FilePath;
+                        myProcess.StartInfo.CreateNoWindow = true;
+                        myProcess.Start();
+                        if(myProcess.PriorityClass == ProcessPriorityClass.RealTime)
+                        {
+                            myProcess.PriorityClass = ProcessPriorityClass.Normal;
+                        }
                         MessageBox.Show($"new priority class: {myProcess.PriorityClass}");
                     }
                 }

@@ -8,17 +8,19 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="13*"/>
-            <RowDefinition/>
+            <RowDefinition Height="369*"/>
+            <RowDefinition Height="34*"/>
+            <RowDefinition Height="31*"/>
         </Grid.RowDefinitions>
-        <DataGrid x:Name="processesDG" SelectionMode="Single" AutoGenerateColumns="False" SelectedCellsChanged="ProcessesDGSelectedCellsChanged" Grid.RowSpan="2">
+        <DataGrid x:Name="processesDG" SelectionMode="Single" AutoGenerateColumns="False" SelectedCellsChanged="ProcessesDGSelectedCellsChanged" Grid.RowSpan="3">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="100"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding ProcessName}" Width="450"/>
                 <DataGridTextColumn Header="Priority" Binding="{Binding BasePriority}" Width="450"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="openProcessBtn" Click="openProcessBtnClick" Content="Открыть процесс" Background="Beige" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Width="800" Height="31"/>
-        
+        <Button x:Name="openProcessHighPriorityBtn" Click="OpenProcessHighPriorityBtnClick" Content="Открыть процесс c HIGH приоритетом" Background="Beige" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Width="800" Height="31"/>
+        <Button x:Name="openProcessNormalPriorityBtn" Click="OpenProcessNormalPriorityBtnClick" Content="Открыть процесс с NORMAL приоритетом" Background="Beige" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Width="800" Height="31" />
+
     </Grid>
 </Window>
