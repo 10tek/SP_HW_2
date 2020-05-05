@@ -1,19 +1,9 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace TaskManager
 {
@@ -28,7 +18,6 @@ namespace TaskManager
             InitializeComponent();
             var currentProcesses = Process.GetProcesses().ToList();
             processesDG.ItemsSource = currentProcesses;
-
         }
 
         private void ProcessesDGSelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
@@ -51,7 +40,6 @@ namespace TaskManager
             {
                 MessageBox.Show("Отказано в доступе");
             }
-            return;
         }
 
         public bool OpenFileDialog()
@@ -78,7 +66,7 @@ namespace TaskManager
                         myProcess.StartInfo.CreateNoWindow = true;
                         myProcess.Start();
                         myProcess.PriorityClass = ProcessPriorityClass.High;
-                        MessageBox.Show($"new priority class: {myProcess.PriorityClass}");
+                        MessageBox.Show($"new priority class: {myProcess.PriorityClass}. ID: {myProcess.Id}");
                     }
                 }
                 else
@@ -108,7 +96,7 @@ namespace TaskManager
                         {
                             myProcess.PriorityClass = ProcessPriorityClass.Normal;
                         }
-                        MessageBox.Show($"new priority class: {myProcess.PriorityClass}");
+                        MessageBox.Show($"new priority class: {myProcess.PriorityClass}. ID: {myProcess.Id}");
                     }
                 }
                 else
@@ -119,6 +107,57 @@ namespace TaskManager
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void OpenProcessCheckPriorityBtnClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (OpenFileDialog())
+                {
+                    using (Process myProcess = new Process())
+                    {
+                        myProcess.StartInfo.UseShellExecute = false;
+                        myProcess.StartInfo.FileName = FilePath;
+                        myProcess.StartInfo.CreateNoWindow = true;
+                        myProcess.Start();
+                        myProcess.PriorityClass = ProcessPriorityClass.RealTime;
+                        MessageBox.Show($"new priority class: {myProcess.PriorityClass}. ID: {myProcess.Id}");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Файл не выбран");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void CloseProcessByIdBtnClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int id;
+                if (!int.TryParse(idTB.Text, out id))
+                {
+                    MessageBox.Show("Введите ЦЕЛОЕ ЧИСЛО!");
+                    return;
+                }
+
+                var result = MessageBox.Show("Вы точно хотите удалить?", "Уведомление", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.No || result == MessageBoxResult.Cancel) return;
+                var process = Process.GetProcessById(id);
+                process.Kill();
+                processesDG.ItemsSource = Process.GetProcesses().ToList();
+                idTB.Text = "Enter ID";
+            }
+            catch
+            {
+                MessageBox.Show("Отказано в доступе");
             }
         }
     }

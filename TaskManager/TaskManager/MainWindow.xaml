@@ -7,20 +7,26 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400*"/>
+            <ColumnDefinition Width="400*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="369*"/>
             <RowDefinition Height="34*"/>
-            <RowDefinition Height="31*"/>
+            <RowDefinition Height="34*"/>
         </Grid.RowDefinitions>
-        <DataGrid x:Name="processesDG" SelectionMode="Single" AutoGenerateColumns="False" SelectedCellsChanged="ProcessesDGSelectedCellsChanged" Grid.RowSpan="3">
+        <DataGrid x:Name="processesDG" SelectionMode="Single" AutoGenerateColumns="False" SelectedCellsChanged="ProcessesDGSelectedCellsChanged" Grid.RowSpan="4" Grid.ColumnSpan="2" Margin="0,0,0,31">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="100"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding ProcessName}" Width="450"/>
                 <DataGridTextColumn Header="Priority" Binding="{Binding BasePriority}" Width="450"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="openProcessHighPriorityBtn" Click="OpenProcessHighPriorityBtnClick" Content="Открыть процесс c HIGH приоритетом" Background="Beige" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Width="800" Height="31"/>
-        <Button x:Name="openProcessNormalPriorityBtn" Click="OpenProcessNormalPriorityBtnClick" Content="Открыть процесс с NORMAL приоритетом" Background="Beige" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Width="800" Height="31" />
-
+        <Button x:Name="openProcessHighPriorityBtn" Click="OpenProcessHighPriorityBtnClick" Content="Открыть процесс c HIGH приоритетом" Background="Beige" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Width="400" Height="34"/>
+        <Button x:Name="openProcessNormalPriorityBtn" Click="OpenProcessNormalPriorityBtnClick" Content="Открыть процесс с NORMAL приоритетом" Background="Beige" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Width="400" Height="34" />
+        <Button x:Name="openProcessCheckPriorityBtn" Click="OpenProcessCheckPriorityBtnClick" Content="Открыть процесс и проверить приоритет" Background="Beige" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2" Width="400" Height="34"/>
+        <Button x:Name="closeProcessByIdBtn" Click="CloseProcessByIdBtnClick" Content="Удалить по ID: " Background="Beige" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Width="300" Height="34"/>
+        <TextBox x:Name="idTB" TextAlignment="Center" VerticalContentAlignment="Center" Background="Azure" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Width="100" Height="34"/>
     </Grid>
 </Window>
